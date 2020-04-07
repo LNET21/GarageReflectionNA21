@@ -11,8 +11,13 @@ namespace GarageDI.Handler
     {
         bool IsFull { get; }
 
-        bool Park(Vehicle v);
-        Vehicle GetVehicle(Tuple<Vehicle, PropertyInfo[]> vehicleProp);
+        bool Park(IVehicle v);
+        IVehicle GetVehicle(Tuple<IVehicle, PropertyInfo[]> vehicleProp);
+        IVehicle Get(string regNo);
         List<VehicleCountDTO> GetByType();
+        List<IVehicle> GetAll();
+        bool Leave(string regNo);
+        IEnumerable<IVehicle> GetVehicles(Tuple<IVehicle, PropertyInfo[]> vehicleProp);
+        IEnumerable<IVehicle> SearchVehicle(Tuple<IVehicle, PropertyInfo[]> vehicleProp);
     }
 }

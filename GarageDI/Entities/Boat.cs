@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GarageDI.Attributes;
 
 namespace GarageDI.Entities
 {
     class Boat : Vehicle
     {
-        public string  Name { get; set; }
+        [Include(5)]
         public int Length { get; set; }
     }
 }

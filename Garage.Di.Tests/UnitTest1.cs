@@ -9,7 +9,7 @@ namespace Garage.Di.Tests
         [TestMethod]
         public void TestMethod1()
         {
-            var vehicle = new Vehicle();
+            
         }
     }
 }

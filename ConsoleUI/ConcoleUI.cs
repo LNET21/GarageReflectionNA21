@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace ConsoleUI
 {
     public class ConsoleUI : IUI
@@ -10,18 +9,10 @@ namespace ConsoleUI
             Console.Clear();
         }
 
-        public string ParkMeny()
+        public void Meny(bool isFull, string options, string menyheading)
         {
-           return "ParkMeny";
-           
+            Console.WriteLine(isFull ? "No spots left" : menyheading + "\n" + options);
         }
-
-        public void ParkMeny(bool isFull, string options)
-        {
-            Console.WriteLine(isFull ?  "No spots left" : ParkMeny() + "\n" + options);
-        }
-
-      
 
         public void Print(string message)
         {
@@ -30,7 +21,13 @@ namespace ConsoleUI
 
         public void ShowMeny()
         {
-            Console.WriteLine("Options here...");
+            Console.WriteLine("1, Park");
+            Console.WriteLine("2, List Parked");
+            Console.WriteLine("3, List By Type");
+            Console.WriteLine("4, UnPark");
+            Console.WriteLine("5, Search");
+            Console.WriteLine("6, SeedTestData");
+            Console.WriteLine("0, Quit");
         }
     }
 }

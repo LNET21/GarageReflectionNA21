@@ -1,8 +1,4 @@
-﻿using ConsoleUI;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using VehicleCollection;
+﻿using VehicleCollection;
 
 namespace GarageDI
 {
@@ -10,7 +6,6 @@ namespace GarageDI
     {
         public int Size { get; set; }
         public string Name { get; set; }
-
     }
 }
 

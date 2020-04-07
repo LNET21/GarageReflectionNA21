@@ -10,6 +10,7 @@ namespace VehicleCollection
          int Count { get; }
          int Capacity { get; }
          bool Park(T vehicle);
+         bool Leave(T vehicle);
 
     }
 }

@@ -1,9 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
 namespace VehicleCollection
 {
@@ -11,16 +7,13 @@ namespace VehicleCollection
     {
         public string Name { get; }
 
-        private T[] vehicles;
+        private readonly T[] vehicles;
         public int Capacity => vehicles.Length;
 
         public int Count { get; private set; } = 0;
 
-        public InMemoryGarage(IConfiguration configuration, ISettings sett)
+        public InMemoryGarage(ISettings sett)
         {
-            //var settings = configuration.GetSection("Garage:Settings");
-            //var size = int.Parse(settings["Size"]);
-            //vehicles = new T[size];
             Name = sett.Name;
             vehicles = new T[sett.Size];
         }
@@ -50,6 +43,23 @@ namespace VehicleCollection
                     result = true;
                     Count++;
                     break;
+                }
+            }
+            return result;
+        }
+
+        public bool Leave(T vehicle)
+        {
+            bool result = false;
+
+            for (int i = 0; i < vehicles.Length; i++)
+            {
+                if(vehicles[i].Equals(vehicle))
+                {
+                    vehicles[i] = default;
+                    result = true;
+                    Count--;
+                    return result;
                 }
             }
             return result;

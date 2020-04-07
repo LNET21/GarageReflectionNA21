@@ -11,7 +11,6 @@ namespace GarageDI
 {
     class Program
     {
-       
         static void Main(string[] args)
         {
             ServiceCollection serviceCollection = new ServiceCollection();
@@ -19,7 +18,6 @@ namespace GarageDI
             IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
 
             serviceProvider.GetService<GarageManager>().Run();
-
         }
 
         private static void ConfigureServices(ServiceCollection serviceCollection)
@@ -29,10 +27,11 @@ namespace GarageDI
  
             configuration.Bind("Garage:Settings", garageSettings);
 
-            serviceCollection.AddSingleton<IConfiguration>(configuration);
+            serviceCollection.AddSingleton(configuration);
             serviceCollection.AddSingleton(garageSettings);
             serviceCollection.AddTransient<GarageManager>();
-            serviceCollection.AddTransient<IGarage<Vehicle>, InMemoryGarage<Vehicle>>();
+            serviceCollection.AddTransient<IGarage<IVehicle>, InMemoryGarage<IVehicle>>();
+            serviceCollection.AddTransient<IVehicle, Vehicle>();
             serviceCollection.AddTransient<IGarageHandler, GarageHandler>();
             serviceCollection.AddTransient<IUI, ConsoleUI.ConsoleUI>();
         }

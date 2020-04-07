@@ -2,9 +2,9 @@
 {
     public enum VehicleType
     {
-       Car,
-       Buss,
-       Boat,
-        MotorCycle
+       Car = 1,
+       Buss = 2,
+       Boat = 3,
+       MotorCycle = 4
     }
 }
