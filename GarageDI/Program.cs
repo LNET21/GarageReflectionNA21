@@ -20,20 +20,22 @@ namespace GarageDI
             serviceProvider.GetService<GarageManager>().Run();
         }
 
-        private static void ConfigureServices(ServiceCollection serviceCollection)
+        private static void ConfigureServices(IServiceCollection services)
         {
             IConfiguration configuration = GetConfig();
             ISettings garageSettings = new Settings();
  
             configuration.Bind("Garage:Settings", garageSettings);
 
-            serviceCollection.AddSingleton(configuration);
-            serviceCollection.AddSingleton(garageSettings);
-            serviceCollection.AddTransient<GarageManager>();
-            serviceCollection.AddTransient<IGarage<IVehicle>, InMemoryGarage<IVehicle>>();
-            serviceCollection.AddTransient<IVehicle, Vehicle>();
-            serviceCollection.AddTransient<IGarageHandler, GarageHandler>();
-            serviceCollection.AddTransient<IUI, ConsoleUI.ConsoleUI>();
+            //services.Configure<Settings>(configuration.GetSection("Garage:Settings"));
+                 
+            services.AddSingleton(configuration);
+            services.AddSingleton(garageSettings);
+            services.AddTransient<GarageManager>();
+            services.AddTransient<IGarage<IVehicle>, InMemoryGarage<IVehicle>>();
+            services.AddTransient<IVehicle, Vehicle>();
+            services.AddTransient<IGarageHandler, GarageHandler>();
+            services.AddTransient<IUI, ConsoleUI.ConsoleUI>();
         }
 
         private static IConfigurationRoot GetConfig()

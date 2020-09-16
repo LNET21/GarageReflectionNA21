@@ -11,6 +11,15 @@ namespace GarageDI.Entities
         public static Predicate<string> Check;
         public static Action Callback;
 
+        public string Name { get; }
+
+
+        public Vehicle()
+        {
+            Name = GetType().Name;
+        }
+        
+
         [Beautify("Registration number")]
         [Include(1)]
         public string RegNo
@@ -49,12 +58,12 @@ namespace GarageDI.Entities
             }
         }
 
-        //ToDo bör bara göras en gång
+        //ToDo bör bara göras en gång spara undan sedan
         public virtual string Print()
         {
             var builder = new StringBuilder().Append($"[{this.GetType().Name}]\t");
 
-            Array.ForEach(this.GetIncludeProps(),
+            Array.ForEach(this.GetPropertiesWithIncludedAttribute(),
                            p => builder.Append($" {p.GetDisplayTest()}:{p.GetValue(this, null)?.ToString()}"));
 
             return builder.ToString();

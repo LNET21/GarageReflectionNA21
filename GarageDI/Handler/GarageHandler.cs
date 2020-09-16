@@ -18,7 +18,7 @@ namespace GarageDI.Handler
             this.garage = garage;
         }
 
-        public bool IsFull => garage.Count >= garage.Capacity;
+        public bool IsGarageFull => garage.Count >= garage.Capacity;
 
         public List<IVehicle> GetAll()
         {
@@ -36,7 +36,7 @@ namespace GarageDI.Handler
                     .ToList();
         }
 
-        public IVehicle GetVehicle(Tuple<IVehicle, PropertyInfo[]> vehicleProp)
+        public IVehicle GetVehicle((IVehicle, PropertyInfo[]) vehicleProp)
         {
             var vehicle = vehicleProp.Item1;
 
@@ -61,7 +61,7 @@ namespace GarageDI.Handler
             return vehicle;
         } 
         
-        public IEnumerable<IVehicle> SearchVehicle(Tuple<IVehicle, PropertyInfo[]> vehicleProp)
+        public IEnumerable<IVehicle> SearchVehicle((IVehicle, PropertyInfo[]) vehicleProp)
         {
             var result = vehicleProp.Item1 is null ? garage.ToList() : 
             garage.Where(v => v.GetType() == vehicleProp.Item1.GetType());

@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using GarageDI.Entities;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace VehicleCollection
 {
-   public class InMemoryGarage<T> : IGarage<T>, IEnumerable<T> 
+   public class InMemoryGarage<T> : IGarage<T>, IEnumerable<T>  where T : IVehicle
     {
         public string Name { get; }
 

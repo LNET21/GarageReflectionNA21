@@ -83,8 +83,9 @@ namespace GarageDI
 
             if (search.Equals(all))
             {
-                var vehicleType = vehicle.GetIncludeProps();
-                var vehicles = handler.SearchVehicle(new Tuple<IVehicle, PropertyInfo[]>(null, vehicleType));
+                //ToDo: remove vehicle!!!
+                var vehicleType = vehicle.GetPropertiesWithIncludedAttribute();
+                var vehicles = handler.SearchVehicle((null, vehicleType));
                 PrintAll(vehicles);
             }
             else if (search != all)
@@ -111,8 +112,7 @@ namespace GarageDI
         private void UnPark()
         {
             var regNo = Util.AskForString("Enter reg number").ToUpper();
-            var message = handler.Leave(regNo) ? "Vehicle unparked" : "Can´t find vehicle";
-            ui.Print(message);
+            ui.Print(handler.Leave(regNo) ? "Vehicle unparked" : "Can´t find vehicle");
         }
 
         private void ListParked()
@@ -134,8 +134,8 @@ namespace GarageDI
         private void Park()
         {
             ui.Clear();
-            ui.Meny(handler.IsFull, GetParkMenyOptions(), "Park meny");
-            if (handler.IsFull) return;
+            ui.Meny(handler.IsGarageFull, GetParkMenyOptions(), "Park meny");
+            if (handler.IsGarageFull) return;
 
             VehicleType vehicleType = (VehicleType)ChooseVehicle(search: false);
             var vehicleProp = vehicleType.GetPropsForType();
@@ -153,6 +153,7 @@ namespace GarageDI
             {
                 input = Util.AskForKey("");
 
+                //Vid sök ska man kunna söka på alla fordon med hjälp av 0;
                 cont = search ?
                     input <= Enum.GetValues(typeof(VehicleType)).Length && input >= 0 :
                     input <= Enum.GetValues(typeof(VehicleType)).Length && input > 0;
@@ -164,8 +165,7 @@ namespace GarageDI
 
         private bool RegNoExists(string regNo)
         {
-            var exists = handler.Get(regNo);
-            if (exists != null)
+            if (handler.Get(regNo) != null)
             {
                 ui.Print($"Reg number:{regNo} is already in the garage!");
                 return false;

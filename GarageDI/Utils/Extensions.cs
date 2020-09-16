@@ -2,6 +2,7 @@
 using GarageDI.Entities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
@@ -9,19 +10,32 @@ namespace GarageDI.Utils
 {
    public static class Extensions
     {
-        public static Tuple<IVehicle,PropertyInfo[]> GetPropsForType(this VehicleType vehicleType)
+        public static (IVehicle,PropertyInfo[]) GetPropsForType(this VehicleType vehicleType)
         {
-            var type = Type.GetType($"GarageDI.Entities.{vehicleType}");
-            if (type is null) return null;
-            var vehicle = (IVehicle)Activator.CreateInstance(type);
-            var properties = vehicle.GetIncludeProps();
+            //ToDo: refactor only do once for type
+            Type type = null;
 
-            return new Tuple<IVehicle, PropertyInfo[]>(vehicle, properties);
+            try
+            {
+               type = Type.GetType($"GarageDI.Entities.{vehicleType}", throwOnError: true);
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);   
+            }
+
+            if (type is null) return (null,null);
+
+            var vehicle = (IVehicle)Activator.CreateInstance(type);
+            var properties = vehicle.GetPropertiesWithIncludedAttribute();
+
+            return (vehicle, properties);
         } 
 
-        public static PropertyInfo[] GetIncludeProps<T>(this T type)
+        public static PropertyInfo[] GetPropertiesWithIncludedAttribute<T>(this T type)  where T : IVehicle
         {
-            return  type.GetType()
+            return type.GetType()
                             .GetProperties()
                             .Where(p => p.GetCustomAttribute(typeof(Include)) != null)
                             .OrderBy(o => ((Include)o.GetCustomAttribute(typeof(Include))).Order)
