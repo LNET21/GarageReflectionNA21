@@ -74,7 +74,7 @@ namespace GarageDI
         private void Search()
         {
             ui.Clear();
-            ui.Meny(false, GetParkMenyOptions(), "Search meny!" +
+            ui.Meny(isFull : false, GetParkMenyOptions(), "Search meny!" +
                                                "\nSkip search criteria with x" +
                                                "\n0, For all vehicles");
             ui.Print("");
@@ -154,6 +154,8 @@ namespace GarageDI
                 input = Util.AskForKey("");
 
                 //Vid sök ska man kunna söka på alla fordon med hjälp av 0;
+                //var x = 5 > 4 ? 44 : 57;
+
                 cont = search ?
                     input <= Enum.GetValues(typeof(VehicleType)).Length && input >= 0 :
                     input <= Enum.GetValues(typeof(VehicleType)).Length && input > 0;
