@@ -12,10 +12,12 @@ namespace GarageDI.Handler
     class GarageHandler : IGarageHandler
     {
         private readonly IGarage<IVehicle> garage;
+        private readonly IUtil util;
 
-        public GarageHandler(IGarage<IVehicle> garage)
+        public GarageHandler(IGarage<IVehicle> garage, IUtil util)
         {
             this.garage = garage;
+            this.util = util;
         }
 
         public bool IsGarageFull => garage.Count >= garage.Capacity;
@@ -47,10 +49,10 @@ namespace GarageDI.Handler
                 switch (typeCode)
                 {
                     case TypeCode.Int32:
-                        prop.SetValue(vehicle, Util.AskForInt(prop.GetDisplayTest()));
+                        prop.SetValue(vehicle, util.AskForInt(prop.GetDisplayTest()));
                         break;
                     case TypeCode.String:
-                            var r = Util.AskForString(prop.GetDisplayTest());
+                            var r = util.AskForString(prop.GetDisplayTest());
                             vehicle[prop.Name] = r;
                         break;
                     default:
@@ -68,7 +70,7 @@ namespace GarageDI.Handler
 
             foreach (var prop in vehicleProp.Item2)
             {
-                var searchWord = Util.AskForString(prop.GetDisplayTest()).ToUpper();
+                var searchWord = util.AskForString(prop.GetDisplayTest()).ToUpper();
                 result = result.Where(v => v[prop.Name].ToString() == 
                                      (searchWord == "X" ? v[prop.Name].ToString() : searchWord))
                                       .ToList();

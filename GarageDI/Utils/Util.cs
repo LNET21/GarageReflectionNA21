@@ -1,20 +1,27 @@
-﻿using System;
+﻿using ConsoleUI;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace GarageDI.Utils
 {
-    public static class Util
+    public class Util : IUtil
     {
-        internal static string AskForString(string prompt)
+        private readonly IUI ui;
+
+        public Util(IUI ui)
+        {
+            this.ui = ui;
+        }
+        public string AskForString(string prompt)
         {
             bool correct = true;
             string answer;
 
-            do 
+            do
             {
-                Console.WriteLine(prompt);
-                answer = Console.ReadLine();
+                ui.Print(prompt);
+                answer = ui.GetString();
 
                 if (!string.IsNullOrEmpty(answer))
                 {
@@ -23,14 +30,14 @@ namespace GarageDI.Utils
 
             } while (correct);
 
-            return answer; 
+            return answer;
         }
 
-        internal static int AskForInt(string prompt)
+        public int AskForInt(string prompt)
         {
             bool success;
-            uint answer; 
-            do 
+            uint answer;
+            do
             {
                 string input = AskForString(prompt);
 
@@ -38,7 +45,7 @@ namespace GarageDI.Utils
 
                 if (!success)
                 {
-                    Console.WriteLine("Wrong format only numbers. Negative numbers not allowed");
+                    ui.Print("Wrong format only numbers. Negative numbers not allowed");
                 }
 
             } while (!success);
@@ -46,7 +53,7 @@ namespace GarageDI.Utils
             return (int)answer;
         }
 
-        internal static int AskForKey(string prompt)
+        public int AskForKey(string prompt)
         {
             bool success;
             int keyPressed;
@@ -54,11 +61,11 @@ namespace GarageDI.Utils
             do
             {
                 Console.Write(prompt);
-                var input = Console.ReadKey(intercept: true).KeyChar.ToString();
+                var input = ui.GetKey();
                 success = int.TryParse(input, out keyPressed);
                 if (!string.IsNullOrEmpty(input) && success)
-                success = true;
-              
+                    success = true;
+
             } while (!success);
 
             return keyPressed;

@@ -8,6 +8,7 @@ namespace GarageDI.Entities
     public class Vehicle : IVehicle
     {
         private string regNo;
+
         public static Predicate<string> Check;
         public static Action Callback;
 
@@ -28,8 +29,8 @@ namespace GarageDI.Entities
             set
             {
                 
-                var result = (bool)Check?.Invoke(value.ToUpper());
-                if (result)
+                var ok = (bool)Check?.Invoke(value.ToUpper());
+                if (ok)
                     regNo = value.ToUpper();
                 else
                     Callback?.Invoke();
@@ -58,7 +59,6 @@ namespace GarageDI.Entities
             }
         }
 
-        //ToDo bör bara göras en gång spara undan sedan
         public virtual string Print()
         {
             var builder = new StringBuilder().Append($"[{this.GetType().Name}]\t");

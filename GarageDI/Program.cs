@@ -1,6 +1,7 @@
 ﻿using ConsoleUI;
 using GarageDI.Entities;
 using GarageDI.Handler;
+using GarageDI.Utils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -23,12 +24,11 @@ namespace GarageDI
         private static void ConfigureServices(IServiceCollection services)
         {
             IConfiguration configuration = GetConfig();
+
             ISettings garageSettings = new Settings();
- 
             configuration.Bind("Garage:Settings", garageSettings);
 
-            //services.Configure<Settings>(configuration.GetSection("Garage:Settings"));
-                 
+            services.Configure<Settings>(configuration.GetSection("Garage:Settings").Bind);
             services.AddSingleton(configuration);
             services.AddSingleton(garageSettings);
             services.AddTransient<GarageManager>();
@@ -36,6 +36,7 @@ namespace GarageDI
             services.AddTransient<IVehicle, Vehicle>();
             services.AddTransient<IGarageHandler, GarageHandler>();
             services.AddTransient<IUI, ConsoleUI.ConsoleUI>();
+            services.AddSingleton<IUtil, Util>();
         }
 
         private static IConfigurationRoot GetConfig()

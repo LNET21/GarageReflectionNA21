@@ -3,6 +3,8 @@ namespace ConsoleUI
 {
     public interface IUI
     {
+        string GetString();
+        string GetKey();
         void ShowMeny();
         void Print(string message);
         void Clear();

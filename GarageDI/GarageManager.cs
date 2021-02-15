@@ -15,14 +15,16 @@ namespace GarageDI
         private readonly IUI ui;
         private readonly IGarageHandler handler;
         private readonly IVehicle vehicle;
+        private readonly IUtil util;
         private Dictionary<int, Action> menyOptions;
         private string parkMenyOptions;
 
-        public GarageManager(IUI ui, IGarageHandler handler, IVehicle vehicle)
+        public GarageManager(IUI ui, IGarageHandler handler, IVehicle vehicle, IUtil util)
         {
             this.ui = ui;
             this.handler = handler;
             this.vehicle = vehicle;
+            this.util = util;
             Vehicle.Check = RegNoExists;
             Vehicle.Callback = Run;
         }
@@ -38,7 +40,7 @@ namespace GarageDI
                 ui.Print("Welcome");
                 ui.ShowMeny();
 
-                var input = Util.AskForKey("");
+                var input = util.AskForKey("");
                 if (menyOptions.ContainsKey(input))
                     menyOptions[input]?.Invoke();
 
@@ -111,7 +113,7 @@ namespace GarageDI
 
         private void UnPark()
         {
-            var regNo = Util.AskForString("Enter reg number").ToUpper();
+            var regNo = util.AskForString("Enter reg number").ToUpper();
             ui.Print(handler.Leave(regNo) ? "Vehicle unparked" : "Can´t find vehicle");
         }
 
@@ -145,13 +147,13 @@ namespace GarageDI
                 $"[{vehicleType}] with registration number:{vehicle.RegNo} parked" : $"Something failed");
         }
 
-        private static int ChooseVehicle(bool search)
+        private int ChooseVehicle(bool search)
         {
             int input;
             bool cont;
             do
             {
-                input = Util.AskForKey("");
+                input =  util.AskForKey("");
 
                 //Vid sök ska man kunna söka på alla fordon med hjälp av 0;
                 //var x = 5 > 4 ? 44 : 57;
