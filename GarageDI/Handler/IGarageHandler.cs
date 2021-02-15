@@ -17,7 +17,7 @@ namespace GarageDI.Handler
         List<VehicleCountDTO> GetByType();
         List<IVehicle> GetAll();
         bool Leave(string regNo);
-        IEnumerable<IVehicle> GetVehicles(Tuple<IVehicle, PropertyInfo[]> vehicleProp);
+       // IEnumerable<IVehicle> GetVehicles(Tuple<IVehicle, PropertyInfo[]> vehicleProp);
         IEnumerable<IVehicle> SearchVehicle((IVehicle, PropertyInfo[]) vehicleProp);
     }
 }

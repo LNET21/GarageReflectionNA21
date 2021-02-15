@@ -85,7 +85,6 @@ namespace GarageDI
 
             if (search.Equals(all))
             {
-                //ToDo: remove vehicle!!!
                 var vehicleType = vehicle.GetPropertiesWithIncludedAttribute();
                 var vehicles = handler.SearchVehicle((null, vehicleType));
                 PrintAll(vehicles);
@@ -154,9 +153,6 @@ namespace GarageDI
             do
             {
                 input =  util.AskForKey("");
-
-                //Vid sök ska man kunna söka på alla fordon med hjälp av 0;
-                //var x = 5 > 4 ? 44 : 57;
 
                 cont = search ?
                     input <= Enum.GetValues(typeof(VehicleType)).Length && input >= 0 :

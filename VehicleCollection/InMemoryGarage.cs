@@ -1,10 +1,11 @@
 ﻿using GarageDI.Entities;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace VehicleCollection
 {
-   public class InMemoryGarage<T> : IGarage<T>, IEnumerable<T>  where T : IVehicle
+   public class InMemoryGarage<T> : IGarage<T> where T : IVehicle
     {
         public string Name { get; }
 
@@ -52,17 +53,17 @@ namespace VehicleCollection
         public bool Leave(T vehicle)
         {
             bool result = false;
+            if (vehicle is null) return result;
 
-            for (int i = 0; i < vehicles.Length; i++)
+            var index = Array.IndexOf(vehicles, vehicle);
+
+            if(index >= 0)
             {
-                if(vehicles[i].Equals(vehicle))
-                {
-                    vehicles[i] = default;
-                    result = true;
-                    Count--;
-                    return result;
-                }
+                vehicles[index] = default;
+                Count--;
+                result = true;
             }
+        
             return result;
         }
     }
