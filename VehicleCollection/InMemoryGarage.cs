@@ -17,7 +17,7 @@ namespace VehicleCollection
         public InMemoryGarage(ISettings sett)
         {
             Name = sett.Name;
-            vehicles = new T[sett.Size];
+            vehicles = new T[Math.Max(0,sett.Size)]; ;
         }
 
         public IEnumerator<T> GetEnumerator()

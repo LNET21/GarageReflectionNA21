@@ -12,7 +12,6 @@ namespace GarageDI.Utils
     {
         public static (IVehicle,PropertyInfo[]) GetPropsForType(this VehicleType vehicleType)
         {
-            //ToDo: refactor only do once for type
             Type type = null;
 
             try
@@ -38,7 +37,7 @@ namespace GarageDI.Utils
             return type.GetType()
                             .GetProperties()
                             .Where(p => p.GetCustomAttribute(typeof(Include)) != null)
-                            .OrderBy(o => ((Include)o.GetCustomAttribute(typeof(Include))).Order)
+                            .OrderBy(p => ((Include)p.GetCustomAttribute(typeof(Include))).Order)
                             .ToArray();
         }
 

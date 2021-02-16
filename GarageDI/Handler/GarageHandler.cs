@@ -95,11 +95,5 @@ namespace GarageDI.Handler
             var match = Get(regNo);
             return match is null ? false : garage.Leave(match);
         }
-
-        //public IEnumerable<IVehicle> GetVehicles(Tuple<IVehicle, PropertyInfo[]> vehicleProp)
-        //{
-        //    return new List<IVehicle>();
-        //}
-
     }
 }
