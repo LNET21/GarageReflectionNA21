@@ -5,7 +5,7 @@ namespace GarageDI.Entities
     class MotorCycle :Vehicle
     {
         [Beautify("Cylinder volyme")]
-        [Include(3)]
+        [Include]
         public int CylinderVolyme { get; set; }
     }
 }

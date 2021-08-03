@@ -10,7 +10,7 @@ namespace GarageDI.Utils
 {
    public static class Extensions
     {
-        public static (IVehicle,PropertyInfo[]) GetPropsForType(this VehicleType vehicleType)
+        public static (IVehicle, PropertyInfo[]) GetInstanceAndPropsForType(this VehicleType vehicleType)
         {
             Type type = null;
 
@@ -41,7 +41,7 @@ namespace GarageDI.Utils
                             .ToArray();
         }
 
-        public static string GetDisplayTest(this PropertyInfo prop)
+        public static string GetDisplayText(this PropertyInfo prop)
         {
             var attr = prop.GetCustomAttribute<Beautify>();
             return attr is null ? prop.Name : attr.Text;

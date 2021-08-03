@@ -92,7 +92,7 @@ namespace GarageDI
             else if (search != all)
             {
                 var vehicleType = (VehicleType)search;
-                var vehicleProp = vehicleType.GetPropsForType();
+                var vehicleProp = vehicleType.GetInstanceAndPropsForType();
                 var vehicles = handler.SearchVehicle(vehicleProp);
                 PrintAll(vehicles);
             }
@@ -139,7 +139,7 @@ namespace GarageDI
             if (handler.IsGarageFull) return;
 
             VehicleType vehicleType = (VehicleType)ChooseVehicle(search: false);
-            var vehicleProp = vehicleType.GetPropsForType();
+            var vehicleProp = vehicleType.GetInstanceAndPropsForType();
             var vehicle = handler.GetVehicle(vehicleProp);
 
             ui.Print(handler.Park(vehicle) ?

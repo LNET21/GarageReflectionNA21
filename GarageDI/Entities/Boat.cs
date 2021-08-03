@@ -4,7 +4,7 @@ namespace GarageDI.Entities
 {
     class Boat : Vehicle
     {
-        [Include(5)]
+        [Include]
         public int Length { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace GarageDI.Entities
 {
     class Tefat : Vehicle
     {
-        [Include(6)]
+        [Include]
         public int Range { get; set; }
     }
 }

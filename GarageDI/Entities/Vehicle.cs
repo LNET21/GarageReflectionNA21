@@ -28,9 +28,7 @@ namespace GarageDI.Entities
             get => regNo;
             set
             {
-                
-                var ok = (bool)Check?.Invoke(value.ToUpper());
-                if (ok)
+                if ((bool)Check?.Invoke(value.ToUpper()))
                     regNo = value.ToUpper();
                 else
                     Callback?.Invoke();
@@ -40,7 +38,7 @@ namespace GarageDI.Entities
 
         private string color;
 
-        [Include(2)]
+        [Include]
         public string Color
         {
             get { return color; }
@@ -64,7 +62,7 @@ namespace GarageDI.Entities
             var builder = new StringBuilder().Append($"[{this.GetType().Name}]\t");
 
             Array.ForEach(this.GetPropertiesWithIncludedAttribute(),
-                           p => builder.Append($" {p.GetDisplayTest()}:{p.GetValue(this, null)?.ToString()}"));
+                           p => builder.Append($" {p.GetDisplayText()}:{p.GetValue(this, null)?.ToString()}"));
 
             return builder.ToString();
         }

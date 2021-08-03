@@ -49,13 +49,11 @@ namespace GarageDI.Handler
                 switch (typeCode)
                 {
                     case TypeCode.Int32:
-                        prop.SetValue(vehicle, util.AskForInt(prop.GetDisplayTest()));
+                        prop.SetValue(vehicle, util.AskForInt(prop.GetDisplayText()));
                         break;
                     case TypeCode.String:
-                            var r = util.AskForString(prop.GetDisplayTest());
+                            var r = util.AskForString(prop.GetDisplayText());
                             vehicle[prop.Name] = r;
-                        break;
-                    default:
                         break;
                 }
 
@@ -65,15 +63,14 @@ namespace GarageDI.Handler
         
         public IEnumerable<IVehicle> SearchVehicle((IVehicle, PropertyInfo[]) vehicleProp)
         {
-            var result = vehicleProp.Item1 is null ? garage.ToList() : 
+            var result = vehicleProp.Item1 is null ? garage : 
             garage.Where(v => v.GetType() == vehicleProp.Item1.GetType());
 
             foreach (var prop in vehicleProp.Item2)
             {
-                var searchWord = util.AskForString(prop.GetDisplayTest()).ToUpper();
-                result = result.Where(v => v[prop.Name].ToString() == 
-                                     (searchWord == "X" ? v[prop.Name].ToString() : searchWord))
-                                      .ToList();
+                var searchWord = util.AskForString(prop.GetDisplayText()).ToUpper();
+                result = result.Where(v => v[prop.Name].ToString() ==
+                                     (searchWord == "X" ? v[prop.Name].ToString() : searchWord));
             }
 
             return result.ToList();

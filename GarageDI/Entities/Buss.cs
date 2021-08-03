@@ -4,7 +4,7 @@ namespace GarageDI.Entities
 {
     class Buss : Vehicle
     {
-        [Include(4)]
+        [Include]
         public int Seats { get; set; }
     }
 }

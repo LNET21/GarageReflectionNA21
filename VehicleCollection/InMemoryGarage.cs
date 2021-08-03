@@ -7,17 +7,20 @@ namespace VehicleCollection
 {
    public class InMemoryGarage<T> : IGarage<T> where T : IVehicle
     {
+        private readonly T[] vehicles;
+
         public string Name { get; }
 
-        private readonly T[] vehicles;
         public int Capacity => vehicles.Length;
 
         public int Count { get; private set; } = 0;
 
         public InMemoryGarage(ISettings sett)
         {
+            if (sett is null) throw new ArgumentNullException(nameof(ISettings));
+
             Name = sett.Name;
-            vehicles = new T[Math.Max(0,sett.Size)]; ;
+            vehicles = new T[Math.Max(0,sett.Size)]; 
         }
 
         public IEnumerator<T> GetEnumerator()
